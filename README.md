@@ -1,5 +1,7 @@
 # Terminal Velocity
 
+## Please see the branch tv_python3 for the new version
+
 Terminal Velocity is currently in maintenance mode. Python pip installs are 
 still supported and the software is stable for day to day use with python 2.
 The software is being moved into maintenance mode because both authors 
