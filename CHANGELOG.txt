@@ -1,5 +1,5 @@
 0.2.0, 6th June 2020
-    - Converted the application to run in Python 3
+    - Succesfully converted the application to run in Python 3
 0.1.10, 20th November 2017
     - Bug fix for note name escaping (contributed by immae)
 0.1.9, 19th December 2016

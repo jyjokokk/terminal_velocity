@@ -53,11 +53,11 @@ Other modules could provide better search functions that could be plugged in.
 
 """
 import logging
-logger = logging.getLogger(__name__)
 import os
 import sys
-
 import chardet
+
+logger = logging.getLogger(__name__)
 
 
 def unicode_or_bust(raw_text):
@@ -122,9 +122,8 @@ class NewNoteBookError(Error):
 
 
 class NewNoteError(Error):
-    """Exception raised if making a new Note or adding it to a NoteBook fails.
+    """Raises exception if making a new Note or adding it to NoteBook fails."""
 
-    """
     def __init__(self, value):
         self.value = value
 
@@ -197,7 +196,8 @@ class PlainTextNote(object):
                 os.makedirs(directory)
             except os.error as e:
                 raise NewNoteError(
-                        "{0} could not be created: {1}".format(directory, e))
+                    "{0} could not be created: {1}".format(directory, e)
+                )
 
         # Create an empty file if the file doesn't exist.
         open(self.abspath, 'a')
@@ -280,7 +280,7 @@ class PlainTextNoteBook(object):
     """A NoteBook that stores its notes as a directory of plain text files."""
 
     def __init__(self, path, extension, extensions,
-            search_function=brute_force_search, exclude=None):
+                 search_function=brute_force_search, exclude=None):
         """Make a new PlainTextNoteBook for the given path.
 
         If `path` does not exist it will be created (parent directories too).
@@ -312,7 +312,8 @@ class PlainTextNoteBook(object):
         self.extension = extension
         self.search_function = search_function
         self.exclude = exclude
-        if not self.exclude: self.exclude = []
+        if not self.exclude:
+            self.exclude = []
 
         self.extensions = []
         for extension in extensions:
@@ -327,7 +328,7 @@ class PlainTextNoteBook(object):
                 os.makedirs(self.path)
             except os.error as e:
                 raise NewNoteBookError(
-                        "{0} could not be created: {1}".format(self.path, e))
+                    "{0} could not be created: {1}".format(self.path, e))
         else:
             # TODO: Check that self.path is a directory, if not raise.
             pass
@@ -362,7 +363,7 @@ class PlainTextNoteBook(object):
                 if relpath is None:
                     # The filename could not be decoded.
                     logger.error(
-                            "Could not decode filename: {0}".format(relpath))
+                        "Could not decode filename: {0}".format(relpath))
                 else:
                     self.add_new(title=unicode_relpath, extension=ext)
 
@@ -411,14 +412,14 @@ class PlainTextNoteBook(object):
         if not os.path.split(title)[1]:
             # Don't create notes with empty filenames.
             raise InvalidNoteTitleError(
-                    "Invalid note title: {0}".format(title))
+                "Invalid note title: {0}".format(title))
 
         # Check that we don't already have a note with the same title and
         # extension.
         for note in self._notes:
             if note.title == title and note.extension == extension:
                 raise NoteAlreadyExistsError(
-                        "Note already in NoteBook: {0}".format(note.title))
+                    "Note already in NoteBook: {0}".format(note.title))
 
         # Ok, add the note.
         note = PlainTextNote(title, self, extension)
