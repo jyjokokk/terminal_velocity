@@ -15,12 +15,12 @@ from . import notebook
 
 
 palette = [
-    ("placeholder", "dark blue", "default"),
-    ("notewidget unfocused", "default", "default"),
-    ("notewidget focused", "black", "brown"),
-    ("search", "default", "default"),
-    ("autocomplete", "black", "brown"),
-    ]
+        ("placeholder", "dark blue", "default"),
+        ("notewidget unfocused", "default", "default"),
+        ("notewidget focused", "black", "brown"),
+        ("search", "default", "default"),
+        ("autocomplete", "black", "brown"),
+        ]
 
 
 def system(cmd, loop):
@@ -29,7 +29,7 @@ def system(cmd, loop):
     loop.screen.stop()
 
     cmd = "{0}".format(cmd)
-    cmd = cmd.encode(sys.getfilesystemencoding())  # FIXME: Correct encoding?
+    cmd = str(cmd)
     safe_cmd = shlex.split(cmd)
 
     logger.debug("System command: {0}".format(safe_cmd))
@@ -119,7 +119,7 @@ class AutocompleteWidget(urwid.Edit):
             return (placeholder_text,
                     [("placeholder", len(placeholder_text))])
 
-        # When no note is focused simply show typed text in search bar.
+            # When no note is focused simply show typed text in search bar.
         if not self.autocomplete_text:
             return super(AutocompleteWidget, self).get_text()
 
@@ -141,8 +141,8 @@ class AutocompleteWidget(urwid.Edit):
             return (self.autocomplete_text,
                     [('autocomplete', len(self.autocomplete_text))])
 
-    def consume(self):
-        """Consume the autocomplete text, turning it into typed text."""
+            def consume(self):
+                """Consume the autocomplete text, turning it into typed text."""
 
         if self.autocomplete_text and (
                 len(self.edit_text) < len(self.autocomplete_text)):
@@ -188,7 +188,7 @@ class NoteFilterListBox(urwid.ListBox):
     def render(self, size, focus=False):
         if len(self.list_walker) == 0:
             placeholder = placeholder_text("No matching notes, press Enter "
-                "to create a new note")
+                    "to create a new note")
             return placeholder.render(size)
         return super(NoteFilterListBox, self).render(size, self.fake_focus)
 
@@ -333,7 +333,7 @@ class MainFrame(urwid.Frame):
                     except notebook.NoteAlreadyExistsError:
                         # Try to open the existing note instead.
                         system(self.editor + ' ' + pipes.quote(self.search_box.edit_text +
-                                self.notebook.extension),
+                            self.notebook.extension),
                             self.loop)
                     except notebook.InvalidNoteTitleError:
                         # TODO: Display error message to user.
@@ -400,7 +400,7 @@ class MainFrame(urwid.Frame):
         # show the note list.
         if len(self.notebook) == 0:
             self.body = placeholder_text("You have no notes yet, to create "
-                "a note type a note title then press Enter")
+                    "a note type a note title then press Enter")
         else:
             self.body = urwid.Padding(self.list_box, left=1, right=1)
 

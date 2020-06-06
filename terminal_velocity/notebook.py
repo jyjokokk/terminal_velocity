@@ -75,7 +75,7 @@ def unicode_or_bust(raw_text):
     for encoding in encodings:
         if encoding:  # getfilesystemencoding() may return None
             try:
-                decoded = str(raw_text, encoding=encoding)
+                decoded = str(raw_text)
                 return decoded
             except UnicodeDecodeError:
                 pass
