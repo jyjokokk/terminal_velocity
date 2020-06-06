@@ -130,8 +130,8 @@ dmypy.json
 # End of https://www.toptal.com/developers/gitignore/api/python
 
 # Additions for and by: jyjokokk
-.todo
-.todo~
+.todo2
+.todo2~
 .ycm_extra_conf.py
 .gitignore
 *.bak
